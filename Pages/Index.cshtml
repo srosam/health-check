@@ -31,10 +31,10 @@
 <div id="healthCheck" style="display: none">
     <h3 id="spn-nick"></h3>
     <h3 id="votes-display"></h3>
-    <input type="button" id="SendClearButton" value="Clear" />
-    <input type="button" id="HappyButton" value=":-)" />
-    <input type="button" id="MehButton" value=":-|" />
-    <input type="button" id="SadButton" value=":-(" />
+    <input type="button" id="SendClearButton" value="Clear" style="display: none"/>
+    <input type="button" id="HappyButton" value="😃" />
+    <input type="button" id="MehButton" value="😐" />
+    <input type="button" id="SadButton" value="☹️" />
     <h4>Health Check Messages:</h4>
     <ul id="health-messages"></ul>
 </div>
@@ -92,7 +92,7 @@
             let v = $.parseJSON(votes);
 
             let votesDisplay = document.getElementById('votes-display');
-            votesDisplay.innerHTML = v.Happy + " 😃 <br/>" + v.Meh + " 😐 <br/>" + v.Sad + " ☹️";
+            votesDisplay.innerHTML = "😃" + v.Happy + "<br/>😐" + v.Meh + "<br/>☹️" + v.Sad;
 
             let msgElement = document.createElement('em');
             msgElement.innerText = `Vote Update Rx'd` + votes;
@@ -138,7 +138,6 @@
         var result = handleAjaxRequest(settings);
     }
 
-
     function sendClear() {
         var settings = getAjaxPost("/api/vote/clear");
         var result = handleAjaxRequest(settings);
@@ -150,7 +149,6 @@
         var settings = getAjaxPost("/api/vote/join", nick);
         var result = handleAjaxRequest(settings);
     }
-
 
     function getAjaxPost(handler, data) {
         return {
@@ -178,6 +176,11 @@
         $('#spn-nick').text($('#nick').val());
         $('#entrance').hide();
         $('#healthCheck').show();
+
+        let nick = $('#spn-nick').text();
+        if (nick === "Admin" || nick === "admin") {
+            $('#SendClearButton').show();
+        }
 
         sendMemberJoined();
     }

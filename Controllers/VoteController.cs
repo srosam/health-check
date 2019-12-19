@@ -14,7 +14,7 @@ namespace tht.Controllers
     {
         private readonly IPushNotifier _pushNotifier;
         private static readonly Dictionary<string, string> Votes = new Dictionary<string, string>();
-        public List<Attendee> Attendees { get; set; }
+        public List<Attendee> Attendees { get; set; } = new List<Attendee>();
 
         public VoteController(IPushNotifier pushNotifier)
         {
