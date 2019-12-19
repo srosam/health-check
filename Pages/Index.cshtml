@@ -77,7 +77,7 @@
             let v = $.parseJSON(votes);
 
             let votesDisplay = document.getElementById('votes-display');
-            votesDisplay.innerHTML = v.Happy + " :-) <br/>" + v.Meh + " :-| <br/>" + v.Sad + " :-(";
+            votesDisplay.innerHTML = v.Happy + " 😃 <br/>" + v.Meh + " 😐 <br/>" + v.Sad + " ☹️";
 
             let msgElement = document.createElement('em');
             msgElement.innerText = `Vote Update Rx'd` + votes;
