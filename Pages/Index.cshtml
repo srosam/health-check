@@ -71,6 +71,21 @@
             $('#health-messages').append(li);
         });
 
+    //connection.on('Attendees',
+    //    (attendees) => {
+
+    //        let people = $.parseJSON(attendees);
+    //        let allPeopleString = people.each(p => p.name);
+
+    //        let msgElement = document.createElement('em');
+    //        msgElement.innerText = `Currently online: ` + allPeopleString;
+
+    //        let li = document.createElement('li');
+    //        li.appendChild(msgElement);
+
+    //        $('#health-messages').append(li);
+    //    });
+
     connection.on('SendVotes',
         (votes) => {
 

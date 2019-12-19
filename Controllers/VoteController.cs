@@ -14,6 +14,7 @@ namespace tht.Controllers
     {
         private readonly IPushNotifier _pushNotifier;
         private static readonly Dictionary<string, string> Votes = new Dictionary<string, string>();
+        public List<Attendee> Attendees { get; set; }
 
         public VoteController(IPushNotifier pushNotifier)
         {
@@ -23,9 +24,13 @@ namespace tht.Controllers
         [HttpPost("Join")]
         public async Task MemberJoin([FromBody] string name)
         {
-            await _pushNotifier.SendMemberJoined(name);
-        }
+            Attendees.Add(new Attendee {Name = name});
 
+            await _pushNotifier.SendMemberJoined(name);
+            //await _pushNotifier.SendAttendees(Attendees);
+            await SendVoteUpdateToAllClients();
+        }
+        
         [HttpPost]
         public async Task ClientSendVote([FromBody] VoteSubmitModel voteSubmission)
         {
@@ -43,7 +48,6 @@ namespace tht.Controllers
             Votes.Clear();
 
             await SendVoteUpdateToAllClients();
-
         }
 
         private async Task SendVoteUpdateToAllClients()

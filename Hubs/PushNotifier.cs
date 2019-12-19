@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -25,5 +26,12 @@ namespace tht.Hubs
         {
             await _context.Clients.All.SendAsync("MemberJoined", name);
         }
+
+        //public async Task SendAttendees(List<Attendee> attendees)
+        //{
+        //    var attendeesJson = JsonConvert.SerializeObject(attendees);
+
+        //    await _context.Clients.All.SendAsync("Attendees", attendeesJson);
+        //}
     }
 }
