@@ -30,6 +30,7 @@
 
 <div id="healthCheck" style="display: none">
     <h3 id="spn-nick"></h3>
+    <h3 id="votes-display"></h3>
     <input type="button" id="SendClearButton" value="Clear" />
     <input type="button" id="HappyButton" value=":-)" />
     <input type="button" id="MehButton" value=":-|" />
@@ -48,6 +49,17 @@
 
     connection.start().catch(err => console.error(err.toString()));
 
+    connection.on('MemberJoined',
+        (name) => {
+            let msgElement = document.createElement('em');
+            msgElement.innerText = name + ` joined the session`;
+
+            let li = document.createElement('li');
+            li.appendChild(msgElement);
+
+            $('#health-messages').append(li);
+        });
+
     connection.on('SendClear',
         () => {
             let msgElement = document.createElement('em');
@@ -61,6 +73,12 @@
 
     connection.on('SendVotes',
         (votes) => {
+
+            let v = $.parseJSON(votes);
+
+            let votesDisplay = document.getElementById('votes-display');
+            votesDisplay.innerHTML = v.Happy + " :-) <br/>" + v.Meh + " :-| <br/>" + v.Sad + " :-(";
+
             let msgElement = document.createElement('em');
             msgElement.innerText = `Vote Update Rx'd` + votes;
 
@@ -111,6 +129,13 @@
         var result = handleAjaxRequest(settings);
     }
 
+    function sendMemberJoined() {
+        let nick = $('#spn-nick').text();
+
+        var settings = getAjaxPost("/api/vote/join", nick);
+        var result = handleAjaxRequest(settings);
+    }
+
 
     function getAjaxPost(handler, data) {
         return {
@@ -138,6 +163,8 @@
         $('#spn-nick').text($('#nick').val());
         $('#entrance').hide();
         $('#healthCheck').show();
+
+        sendMemberJoined();
     }
 </script>
 

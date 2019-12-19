@@ -20,6 +20,12 @@ namespace tht.Controllers
             _pushNotifier = pushNotifier ?? throw new ArgumentNullException(nameof(pushNotifier));
         }
 
+        [HttpPost("Join")]
+        public async Task MemberJoin([FromBody] string name)
+        {
+            await _pushNotifier.SendMemberJoined(name);
+        }
+
         [HttpPost]
         public async Task ClientSendVote([FromBody] VoteSubmitModel voteSubmission)
         {

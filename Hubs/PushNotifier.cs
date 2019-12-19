@@ -20,5 +20,10 @@ namespace tht.Hubs
             var votesJson = JsonConvert.SerializeObject(voteModel);
             await _context.Clients.All.SendAsync("SendVotes", votesJson);
         }
+
+        public async Task SendMemberJoined(string name)
+        {
+            await _context.Clients.All.SendAsync("MemberJoined", name);
+        }
     }
 }
