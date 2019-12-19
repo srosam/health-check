@@ -27,6 +27,11 @@ namespace tht.Hubs
             await _context.Clients.All.SendAsync("MemberJoined", name);
         }
 
+        public async Task SendEnableVoting()
+        {
+            await _context.Clients.All.SendAsync("VotingEnabled");
+        }
+
         //public async Task SendAttendees(List<Attendee> attendees)
         //{
         //    var attendeesJson = JsonConvert.SerializeObject(attendees);

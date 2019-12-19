@@ -14,7 +14,8 @@ namespace tht.Controllers
     {
         private readonly IPushNotifier _pushNotifier;
         private static readonly Dictionary<string, string> Votes = new Dictionary<string, string>();
-        public List<Attendee> Attendees { get; set; } = new List<Attendee>();
+        private static List<Attendee> Attendees { get; set; } = new List<Attendee>();
+        private static bool isVotingEnabled = false;
 
         public VoteController(IPushNotifier pushNotifier)
         {
@@ -46,8 +47,16 @@ namespace tht.Controllers
         public async Task ClearVotes()
         {
             Votes.Clear();
-
+            isVotingEnabled = false;
             await SendVoteUpdateToAllClients();
+        }
+
+        [HttpPost("Enable")]
+        public async Task EnableVoting()
+        {
+            Votes.Clear();
+            isVotingEnabled = true;
+            await _pushNotifier.SendEnableVoting();
         }
 
         private async Task SendVoteUpdateToAllClients()

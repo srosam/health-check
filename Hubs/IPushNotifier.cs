@@ -9,5 +9,6 @@ namespace tht.Hubs
         Task SendVoteUpdate(VoteModel voteModel);
         Task SendMemberJoined(string name);
         //Task SendAttendees(List<Attendee> attendees);
+        Task SendEnableVoting();
     }
 }

@@ -31,10 +31,19 @@
 <div id="healthCheck" style="display: none">
     <h3 id="spn-nick"></h3>
     <h3 id="votes-display"></h3>
-    <input type="button" id="SendClearButton" value="Clear" style="display: none"/>
-    <input type="button" id="HappyButton" value="😃" />
-    <input type="button" id="MehButton" value="😐" />
-    <input type="button" id="SadButton" value="☹️" />
+    
+    <div id="adminButtons" style="display: none">
+        <input type="button" id="SendClearButton" value="Clear" />
+        <input type="button" id="voteNowButton" value="Enable Voting" />
+    </div>
+
+    <div id="votingButtons" style="display: none">
+
+        <input type="button" id="HappyButton" value="😃" />
+        <input type="button" id="MehButton" value="😐" />
+        <input type="button" id="SadButton" value="☹️" />
+    </div>
+
     <h4>Health Check Messages:</h4>
     <ul id="health-messages"></ul>
 </div>
@@ -69,6 +78,11 @@
             li.appendChild(msgElement);
 
             $('#health-messages').append(li);
+        });
+
+    connection.on('VotingEnabled',
+        () => {
+            $('#votingButtons').show();
         });
 
     //connection.on('Attendees',
@@ -109,6 +123,11 @@
         event.preventDefault();
     });
 
+    document.getElementById('voteNowButton').addEventListener('click', event => {
+        sendEnableVoting();
+        event.preventDefault();
+    });
+
     document.getElementById('HappyButton').addEventListener('click', event => {
         let nick = $('#spn-nick').text();
         sendVote(nick, "happy");
@@ -140,6 +159,11 @@
 
     function sendClear() {
         var settings = getAjaxPost("/api/vote/clear");
+        var result = handleAjaxRequest(settings);
+    }
+
+    function sendEnableVoting() {
+        var settings = getAjaxPost("/api/vote/enable");
         var result = handleAjaxRequest(settings);
     }
 
@@ -179,7 +203,7 @@
 
         let nick = $('#spn-nick').text();
         if (nick === "Admin" || nick === "admin") {
-            $('#SendClearButton').show();
+            $('#adminButtons').show();
         }
 
         sendMemberJoined();
