@@ -8,7 +8,9 @@ class VotingPage extends React.Component {
 
   componentDidMount() {}
 
-  render() {
+  render(props) {
+    //debugger;
+
     return (
       <>
         <h2>Hello, </h2>
