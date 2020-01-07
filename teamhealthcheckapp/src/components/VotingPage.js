@@ -1,23 +1,12 @@
-import React from "react";
-//import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
-class VotingPage extends React.Component {
-  state = {
-    userName: ""
-  };
-
-  componentDidMount() {}
-
-  render(props) {
-    //debugger;
-
-    return (
-      <>
-        <h2>Hello, </h2>
-        <p>Please wait for Admin to enable voting</p>
-      </>
-    );
-  }
+function VotingPage(props) {
+  return (
+    <>
+      <h2>Hi {props.userState.name}</h2>
+      <p>Please wait for Admin to enable voting</p>
+    </>
+  );
 }
 
 export default VotingPage;

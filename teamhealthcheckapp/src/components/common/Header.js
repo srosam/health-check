@@ -1,8 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function Header() {
+import LoginButton from "./LoginButton";
+
+function Header(props) {
   const activeStyle = { color: "orange" };
+
+  function LoginSection() {
+    if (!props.loggedInUserName) {
+      return (
+        <NavLink to="login" activeStyle={activeStyle}>
+          Login
+        </NavLink>
+      );
+    }
+
+    return <>Welcome {props.loggedInUserName}</>;
+  }
 
   return (
     <nav>
@@ -14,9 +28,7 @@ function Header() {
         About
       </NavLink>
       {" | "}
-      <NavLink to="login" activeStyle={activeStyle}>
-        Login
-      </NavLink>
+      {LoginSection()}
     </nav>
   );
 }

@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 
 const LoginPage = props => {
   const [errors, setErrors] = useState({});
+
+  //keep to track and handle change of username
   const [user, setUser] = useState({
     id: null,
     name: ""
@@ -24,13 +26,15 @@ const LoginPage = props => {
     event.preventDefault();
 
     if (!formIsValid()) {
-      toast.error("errors");
+      toast.error("Unable to log you in");
       return;
     }
 
     props.history.push("/vote");
-
+    props.userStateSetter({ name: user.name });
     toast.success("Hello " + user.name);
+
+    props.parentLoginHandler();
   }
 
   return (
@@ -38,6 +42,7 @@ const LoginPage = props => {
       user={user}
       onChange={handleChange}
       onLogin={handleLogin}
+      //onLogin={props.handleLoggedIn}
       errors={errors}
     />
   );
