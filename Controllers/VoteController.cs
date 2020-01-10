@@ -23,13 +23,15 @@ namespace tht.Controllers
         }
 
         [HttpPost("Join")]
-        public async Task MemberJoin([FromBody] string name)
+        public async Task<IActionResult> MemberJoin([FromBody] string name)
         {
             Attendees.Add(new Attendee {Name = name});
 
             await _pushNotifier.SendMemberJoined(name);
             //await _pushNotifier.SendAttendees(Attendees);
             await SendVoteUpdateToAllClients();
+
+            return Ok();
         }
         
         [HttpPost]

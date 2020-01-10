@@ -39,6 +39,8 @@ namespace tht
 
             services.TryAddSingleton<IPushNotifier, PushNotifier>();
 
+            services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -60,11 +62,17 @@ namespace tht
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseCors(builder => builder
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
+
             app.UseSignalR(routes =>
-            {
-                routes.MapHub<Chat>("/chat");
-                routes.MapHub<HealthCheckHub>("/health");
-            });
+                       {
+                           routes.MapHub<Chat>("/chat");
+                           routes.MapHub<HealthCheckHub>("/health");
+                       });
 
             app.UseMvc();
         }

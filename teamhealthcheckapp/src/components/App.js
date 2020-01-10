@@ -12,14 +12,25 @@ import VotingPage from "./VotingPage";
 
 import NotFoundPage from "./NotFoundPage";
 
+import signal2 from "../services/signal2";
+import apiService from "../services/apiService";
+
 function App() {
   const [userStateObject, setUserStateObject] = useState({
     id: null,
     name: ""
   });
 
-  function userLoginHandler() {
-    //setUserStateObject({ name: "Susan" });
+  var s2 = new signal2(logMessage);
+  var api = new apiService();
+
+  function userLoginHandler(userName) {
+    setUserStateObject({ id: 5000, name: userName });
+    api.postUserLogin(userName);
+  }
+
+  function logMessage(message) {
+    console.log(message);
   }
 
   return (

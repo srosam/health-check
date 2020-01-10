@@ -34,7 +34,7 @@ const LoginPage = props => {
     props.userStateSetter({ name: user.name });
     toast.success("Hello " + user.name);
 
-    props.parentLoginHandler();
+    props.parentLoginHandler(user.name);
   }
 
   return (
